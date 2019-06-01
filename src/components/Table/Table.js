@@ -2,9 +2,7 @@ import React from "react";
 import styles from "./Table.module.css";
 import Row from "./Row/Row";
 
-const Table = ({ cities }) => {
-  //   console.log(cities);
-
+const Table = ({ cities, click }) => {
   return (
     <table className={styles.wrapper}>
       <thead>
@@ -16,7 +14,7 @@ const Table = ({ cities }) => {
       </thead>
       <tbody>
         {cities.map(city => (
-          <Row key={city.id} city={city} />
+          <Row key={city.id} city={city} click={click} />
         ))}
       </tbody>
     </table>
