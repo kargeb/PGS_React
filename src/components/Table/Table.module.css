@@ -1,0 +1,19 @@
+.wrapper {
+  background-color: darkgray;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 30px 5vw;
+}
+
+.row {
+  height: 30px;
+  width: 90vw;
+  margin: 0 5vw;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.cell {
+  width: 30vw;
+}
