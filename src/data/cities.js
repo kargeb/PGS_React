@@ -20,3 +20,12 @@ export const cities = [
     temp: 17
   }
 ];
+
+export const citiesNames = [
+  "Rzeszów",
+  "Kraków",
+  "Warszawa",
+  "Londyn",
+  "Kraków",
+  "Kraków"
+];

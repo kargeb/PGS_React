@@ -14,7 +14,7 @@ const Table = ({ cities, click }) => {
       </thead>
       <tbody>
         {cities.map(city => (
-          <Row key={city.id} city={city} click={click} />
+          <Row key={city} city={city} click={click} />
         ))}
       </tbody>
     </table>
@@ -22,3 +22,5 @@ const Table = ({ cities, click }) => {
 };
 
 export default Table;
+
+/* <Row key={city.id} city={city} click={click} /> */
