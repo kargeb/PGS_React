@@ -2,60 +2,75 @@ import React, { Component } from "react";
 // import styles from "./Root.module.css";
 import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
 import Table from "../../components/Table/Table";
-import { citiesNames } from "../../data/cities";
+// import { citiesNames } from "../../data/cities";
 import Button from "../../components/Button/Button";
 
 class Root extends Component {
   state = {
     addingCity: "",
-    cities: [...citiesNames],
+    cities: [],
     apiData: []
   };
 
   removeCity = e => {
-    const newCity = e.target.name;
+    const chosenCity = e.target.name;
 
-    const currentCities = [...this.state.cities];
-    console.log(" current cities: " + currentCities);
-    console.log(newCity);
-    var index = currentCities.indexOf(newCity);
-    currentCities.splice(index, 1);
+    console.log("jestem w remove" + chosenCity);
+    // const currentCities = this.getCitiesFromStorage();
 
-    this.setState({ cities: currentCities });
+    console.log(localStorage);
+    localStorage.removeItem(chosenCity);
+    console.log(localStorage);
 
-    // this.setState(prevState => {
-    //   return {
-    //     cities: [...prevState.cities, newCity]
-    //   };
-    // });
+    // const currentCities = [...this.state.cities];
+    // console.log(" current cities: " + currentCities);
+    // console.log(chosenCity);
+    // var index = currentCities.indexOf(chosenCity);
+    // currentCities.splice(index, 1);
+    this.setState({ cities: this.getCitiesFromStorage(), addingCity: "" }, () =>
+      this.state.cities.map(city => this.checkWeather(city))
+    );
   };
 
-  handleSubmit = e => {
+  addCity = e => {
     e.preventDefault();
 
-    console.log(this.state.addingCity);
+    const newCity = this.state.addingCity.toUpperCase().toLowerCase();
 
-    const newCity = this.state.addingCity;
+    localStorage.setItem(newCity, "");
 
-    this.setState(
-      prevState => {
-        return {
-          cities: [...prevState.cities, newCity],
-          addingCity: ""
-        };
-      }
-      //   () => this.state.cities.map(city => this.checkWeather(city))
+    this.setState({ cities: this.getCitiesFromStorage(), addingCity: "" }, () =>
+      this.state.cities.map(city => this.checkWeather(city))
     );
+  };
+
+  //   componentDidUpdate() {
+  //     console.log("DID UPDATE");
+  //   }
+
+  getCitiesFromStorage = () => {
+    const cities = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+      console.log(localStorage.key(i));
+
+      cities.push(localStorage.key(i));
+    }
+
+    return cities;
   };
 
   componentDidMount() {
     // this.state.cities.map(city => this.checkWeather(city));
 
     console.log("start");
+    this.setState({ cities: this.getCitiesFromStorage() }, () =>
+      this.state.cities.map(city => this.checkWeather(city))
+    );
 
-    this.state.cities.map((city, i) => localStorage.setItem(i, city));
-
-    this.state.cities.map(city => this.checkWeather(city));
+    // this.state.cities.map(city => localStorage.setItem(city, ""));
+    console.log(this.state.cities);
+    // this.state.cities.map(city => this.checkWeather(city));
     // console.log(localStorage.length);
     // localStorage.setItem("property", "dupka");
 
@@ -83,7 +98,8 @@ class Root extends Component {
         "&appid=09d095681879bfdc3462857a2653dc8c&units=metric"
     )
       .then(res => res.json())
-      .then(json => console.log(json));
+      .then(json => this.setState({ apiData: json }));
+
     //   .then(json => this.setState({ apiData: json }));
 
     // console.log();
@@ -100,14 +116,14 @@ class Root extends Component {
 
   handleChange = event => {
     this.setState({ addingCity: event.target.value });
-    console.log(this.state.addingCity);
+    // console.log(this.state.addingCity);
   };
 
   render() {
     return (
       <div>
         <HeaderLabel />
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.addCity}>
           <input
             type="text"
             placeholder="Nazwa miasta"
