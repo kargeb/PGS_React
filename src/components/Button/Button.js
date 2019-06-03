@@ -1,9 +1,9 @@
 import React from "react";
 
-const Button = ({ showLog, city }) => {
+const Button = ({ clearStorage, city }) => {
   return (
-    <button onClick={showLog} name={city}>
-      Usuń
+    <button onClick={clearStorage} name={city}>
+      Remove
     </button>
   );
 };

@@ -16,9 +16,9 @@ export const cities = [
   },
   {
     id: 4,
-    name: "Londyn",
+    name: "London",
     temp: 17
   }
 ];
 
-export const citiesNames = ["Rzeszów", "Kraków", "Warszawa", "Londyn"];
+export const citiesNames = ["Rzeszów", "Kraków", "Warszawa", "London"];
