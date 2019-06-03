@@ -12,15 +12,21 @@ class Root extends Component {
   };
 
   clickHandle = e => {
-    // console.log(e.target.name);
-
     const newCity = e.target.name;
 
-    this.setState(prevState => {
-      return {
-        cities: [...prevState.cities, newCity]
-      };
-    });
+    const currentCities = [...this.state.cities];
+    console.log(" current cities: " + currentCities);
+    console.log(newCity);
+    var index = currentCities.indexOf(newCity);
+    currentCities.splice(index, 1);
+
+    this.setState({ cities: currentCities });
+
+    // this.setState(prevState => {
+    //   return {
+    //     cities: [...prevState.cities, newCity]
+    //   };
+    // });
   };
 
   handleSubmit = e => {
@@ -36,6 +42,14 @@ class Root extends Component {
         addingCity: ""
       };
     });
+  };
+
+  checkWeather = () => {
+    const URL_LEFT_PART = "http://api.openweathermap.org/data/2.5/forecast?q=";
+    const URL_RIGHT_PART =
+      "&appid=09d095681879bfdc3462857a2653dc8c&units=metric";
+
+    // http://api.openweathermap.org/data/2.5/forecast?q=lancut&appid=09d095681879bfdc3462857a2653dc8c&units=metric
   };
 
   handleChange = event => {

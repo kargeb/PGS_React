@@ -21,11 +21,4 @@ export const cities = [
   }
 ];
 
-export const citiesNames = [
-  "Rzeszów",
-  "Kraków",
-  "Warszawa",
-  "Londyn",
-  "Kraków",
-  "Kraków"
-];
+export const citiesNames = ["Rzeszów", "Kraków", "Warszawa", "Londyn"];
