@@ -7,6 +7,7 @@ import Button from "../../components/Button/Button";
 
 class Root extends Component {
   state = {
+    addingCity: "",
     cities: [...citiesNames]
   };
 
@@ -22,12 +23,39 @@ class Root extends Component {
     });
   };
 
-  buttonHandle = e => console.log(e.parent);
+  handleSubmit = e => {
+    e.preventDefault();
+
+    console.log(this.state.addingCity);
+
+    const newCity = this.state.addingCity;
+
+    this.setState(prevState => {
+      return {
+        cities: [...prevState.cities, newCity],
+        addingCity: ""
+      };
+    });
+  };
+
+  handleChange = event => {
+    this.setState({ addingCity: event.target.value });
+    console.log(this.state.addingCity);
+  };
 
   render() {
     return (
       <div>
         <HeaderLabel />
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            placeholder="Nazwa miasta"
+            value={this.state.addingCity}
+            onChange={this.handleChange}
+          />
+          <input type="submit" value="Dodaj" />
+        </form>
         <Button showLog={this.buttonHandle} />
         <Table cities={this.state.cities} click={this.clickHandle} />
       </div>
