@@ -4,13 +4,15 @@ import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
 import Table from "../../components/Table/Table";
 // import { citiesNames } from "../../data/cities";
 import Button from "../../components/Button/Button";
+import Temp from "../../components/Temp/Temp";
 
 class Root extends Component {
   state = {
     addingCity: "",
-    cities: ["kraków", "gdańsk", "warszawa", "szczecin"],
+    cities: [],
     apiData: [],
-    details: ""
+    details: "",
+    celsius: true
   };
 
   removeCity = e => {
@@ -75,12 +77,12 @@ class Root extends Component {
     // this.state.cities.map(city => this.checkWeather(city));
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("did update");
-    console.log(prevState.apiData);
-    console.log(prevState.apiData.length === this.state.apiData.length);
-    console.log(this.state.apiData);
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log("did update");
+  //   console.log(prevState.apiData);
+  //   console.log(prevState.apiData.length === this.state.apiData.length);
+  //   console.log(this.state.apiData);
+  // }
 
   checkWeather = city => {
     fetch(
@@ -112,8 +114,6 @@ class Root extends Component {
       }
     });
 
-    console.log("same: " + same);
-
     return same;
   };
 
@@ -141,8 +141,8 @@ class Root extends Component {
       city => city.city.name == event.target.innerText
     );
 
-    console.log(chosenCity);
-    this.setState({ details: chosenCity });
+    console.log(chosenCity[0]);
+    this.setState({ details: chosenCity[0] });
   };
 
   render() {
@@ -168,7 +168,16 @@ class Root extends Component {
           details={this.showDetalis}
         />
 
-        {/* {this.state.details && <p>{this.state.details}</p>} */}
+        {this.state.details && (
+          <ul>
+            <li>{this.state.details.city.name}</li>
+            <li>{this.state.details.city.coord.lat}</li>
+            <li>{this.state.details.city.coord.lon}</li>
+            <li>
+              <Temp city={this.state.details} />
+            </li>
+          </ul>
+        )}
       </div>
     );
   }

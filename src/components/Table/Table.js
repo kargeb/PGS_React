@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Table.module.css";
 import Row from "./Row/Row";
 import Button from "../Button/Button";
+import Temp from "../Temp/Temp";
 
 const Table = ({ cities, click, apiData, details }) => {
   // console.log(apiData[0]);
@@ -37,7 +38,9 @@ const Table = ({ cities, click, apiData, details }) => {
             <td onClick={details} name={city.city.name}>
               {city.city.name}
             </td>
-            <td>{calculateAverageTemp(city)} &#8451;</td>
+            <td>
+              <Temp city={city} />
+            </td>
             {/* <td> {city.city.id} </td> */}
             <td>
               <Button click={click} city={city.city.name}>
