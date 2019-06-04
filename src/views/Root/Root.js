@@ -5,6 +5,9 @@ import Table from "../../components/Table/Table";
 // import { citiesNames } from "../../data/cities";
 import Button from "../../components/Button/Button";
 import Temp from "../../components/Temp/Temp";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Details from "../Details/Details";
+import Settings from "../Settings/Settings";
 
 class Root extends Component {
   state = {
@@ -153,56 +156,63 @@ class Root extends Component {
 
   render() {
     return (
-      <div>
-        <HeaderLabel />
-        <form onSubmit={this.addCity}>
-          <input
-            type="text"
-            placeholder="Nazwa miasta"
-            value={this.state.addingCity}
-            onChange={this.handleChange}
-            required
+      <BrowserRouter>
+        <div>
+          <HeaderLabel />
+          <form onSubmit={this.addCity}>
+            <input
+              type="text"
+              placeholder="Nazwa miasta"
+              value={this.state.addingCity}
+              onChange={this.handleChange}
+              required
+            />
+            <input type="submit" value="Dodaj" />
+          </form>
+          {/* <Button click={this.clearStorage}>Wyczyść wszystko</Button> */}
+          <Button click={this.saveInStorage}>Zapisz</Button>
+          <Table
+            cities={this.state.cities}
+            apiData={this.state.apiData}
+            click={this.removeCity}
+            details={this.showDetalis}
+            celsius={this.state.celsius}
           />
-          <input type="submit" value="Dodaj" />
-        </form>
-        {/* <Button click={this.clearStorage}>Wyczyść wszystko</Button> */}
-        <Button click={this.saveInStorage}>Zapisz</Button>
-        <Table
-          cities={this.state.cities}
-          apiData={this.state.apiData}
-          click={this.removeCity}
-          details={this.showDetalis}
-          celsius={this.state.celsius}
-        />
 
-        <form>
-          <input
-            id="celsius"
-            type="radio"
-            checked={this.state.celsius === true}
-            onChange={() => this.handleRadio(true)}
-          />
-          <label htmlFor="celsius">Celsjusz</label>
-          <input
-            id="fahrenheit"
-            type="radio"
-            checked={this.state.celsius === false}
-            onChange={() => this.handleRadio(false)}
-          />
-          <label htmlFor="fahrenheit">Fahrenheit</label>
-        </form>
+          <form>
+            <input
+              id="celsius"
+              type="radio"
+              checked={this.state.celsius === true}
+              onChange={() => this.handleRadio(true)}
+            />
+            <label htmlFor="celsius">Celsjusz</label>
+            <input
+              id="fahrenheit"
+              type="radio"
+              checked={this.state.celsius === false}
+              onChange={() => this.handleRadio(false)}
+            />
+            <label htmlFor="fahrenheit">Fahrenheit</label>
+          </form>
 
-        {this.state.details && (
-          <ul>
-            <li>{this.state.details.city.name}</li>
-            <li>{this.state.details.city.coord.lat}</li>
-            <li>{this.state.details.city.coord.lon}</li>
-            <li>
-              <Temp city={this.state.details} celsius={this.state.celsius} />
-            </li>
-          </ul>
-        )}
-      </div>
+          {this.state.details && (
+            <ul>
+              <li>{this.state.details.city.name}</li>
+              <li>{this.state.details.city.coord.lat}</li>
+              <li>{this.state.details.city.coord.lon}</li>
+              <li>
+                <Temp city={this.state.details} celsius={this.state.celsius} />
+              </li>
+            </ul>
+          )}
+        </div>
+        <Switch>
+          {/* <Route exact path="/" component={Root} /> */}
+          <Route path="/details" component={Details} />
+          <Route path="/settings" component={Settings} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
