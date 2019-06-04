@@ -3,12 +3,21 @@ import styles from "./Table.module.css";
 import Row from "./Row/Row";
 import Button from "../Button/Button";
 
-const Table = ({ cities, click, apiData }) => {
+const Table = ({ cities, click, apiData, details }) => {
   // console.log(apiData[0]);
 
   // if (apiData[0]) {
   //   console.log(apiData[0].city.name);
   // }
+  function calculateAverageTemp(data) {
+    let temp = 0;
+    for (let i = 0; i < data.list.length; i++) {
+      temp += data.list[i].main.temp;
+    }
+    temp = temp / data.list.length;
+    // Math.trunc(average_temp(data)
+    return Math.trunc(temp);
+  }
 
   // apiData.map(city => console.log(city.city.name));
 
@@ -25,8 +34,11 @@ const Table = ({ cities, click, apiData }) => {
         {apiData.map((city, i) => (
           <tr key={city.city.id} className={styles.row}>
             <td>{i + 1}</td>
-            <td> {city.city.name} </td>
-            <td> {city.city.id} </td>
+            <td onClick={details} name={city.city.name}>
+              {city.city.name}
+            </td>
+            <td>{calculateAverageTemp(city)} &#8451;</td>
+            {/* <td> {city.city.id} </td> */}
             <td>
               <Button click={click} city={city.city.name}>
                 Usuń

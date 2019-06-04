@@ -9,7 +9,8 @@ class Root extends Component {
   state = {
     addingCity: "",
     cities: ["kraków", "gdańsk", "warszawa", "szczecin"],
-    apiData: []
+    apiData: [],
+    details: ""
   };
 
   removeCity = e => {
@@ -31,17 +32,12 @@ class Root extends Component {
 
     const newCity = this.state.addingCity.toUpperCase().toLowerCase();
 
-    // localStorage.setItem(newCity, "");
     this.setState(prevState => ({
       cities: [...prevState.cities, newCity],
       addingCity: ""
     }));
 
     this.checkWeather(newCity);
-
-    // this.setState({ cities: this.getCitiesFromStorage(), addingCity: "" }, () =>
-    //   this.state.cities.map(city => this.checkWeather(city))
-    // );
   };
 
   getCitiesFromStorage = () => {
@@ -138,6 +134,17 @@ class Root extends Component {
     this.setState({ addingCity: event.target.value });
   };
 
+  showDetalis = event => {
+    console.log(event.target.innerText);
+
+    const chosenCity = this.state.apiData.filter(
+      city => city.city.name == event.target.innerText
+    );
+
+    console.log(chosenCity);
+    this.setState({ details: chosenCity });
+  };
+
   render() {
     return (
       <div>
@@ -158,7 +165,10 @@ class Root extends Component {
           cities={this.state.cities}
           apiData={this.state.apiData}
           click={this.removeCity}
+          details={this.showDetalis}
         />
+
+        {/* {this.state.details && <p>{this.state.details}</p>} */}
       </div>
     );
   }
