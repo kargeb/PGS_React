@@ -10,8 +10,14 @@ function calculateAverageTemp(data) {
   return Math.trunc(temp);
 }
 
-const Temp = ({ city }) => {
-  return <span>{calculateAverageTemp(city)}&#8451;</span>;
-};
+const Temp = ({ city, celsius }) => (
+  <>
+    {celsius ? (
+      <span> {calculateAverageTemp(city)}&#8451; </span>
+    ) : (
+      <span>{Math.trunc(calculateAverageTemp(city) * 1.8 + 32)}&#8457;</span>
+    )}
+  </>
+);
 
 export default Temp;

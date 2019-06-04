@@ -4,7 +4,7 @@ import Row from "./Row/Row";
 import Button from "../Button/Button";
 import Temp from "../Temp/Temp";
 
-const Table = ({ cities, click, apiData, details }) => {
+const Table = ({ cities, click, apiData, details, celsius }) => {
   // console.log(apiData[0]);
 
   // if (apiData[0]) {
@@ -39,7 +39,7 @@ const Table = ({ cities, click, apiData, details }) => {
               {city.city.name}
             </td>
             <td>
-              <Temp city={city} />
+              <Temp city={city} celsius={celsius} />
             </td>
             {/* <td> {city.city.id} </td> */}
             <td>

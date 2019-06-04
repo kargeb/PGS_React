@@ -145,6 +145,12 @@ class Root extends Component {
     this.setState({ details: chosenCity[0] });
   };
 
+  handleRadio = unit => {
+    this.setState({
+      celsius: unit
+    });
+  };
+
   render() {
     return (
       <div>
@@ -166,7 +172,25 @@ class Root extends Component {
           apiData={this.state.apiData}
           click={this.removeCity}
           details={this.showDetalis}
+          celsius={this.state.celsius}
         />
+
+        <form>
+          <input
+            id="celsius"
+            type="radio"
+            checked={this.state.celsius === true}
+            onChange={() => this.handleRadio(true)}
+          />
+          <label htmlFor="celsius">Celsjusz</label>
+          <input
+            id="fahrenheit"
+            type="radio"
+            checked={this.state.celsius === false}
+            onChange={() => this.handleRadio(false)}
+          />
+          <label htmlFor="fahrenheit">Fahrenheit</label>
+        </form>
 
         {this.state.details && (
           <ul>
@@ -174,7 +198,7 @@ class Root extends Component {
             <li>{this.state.details.city.coord.lat}</li>
             <li>{this.state.details.city.coord.lon}</li>
             <li>
-              <Temp city={this.state.details} />
+              <Temp city={this.state.details} celsius={this.state.celsius} />
             </li>
           </ul>
         )}
