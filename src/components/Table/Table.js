@@ -1,8 +1,17 @@
 import React from "react";
 import styles from "./Table.module.css";
 import Row from "./Row/Row";
+import Button from "../Button/Button";
 
-const Table = ({ cities, click }) => {
+const Table = ({ cities, click, apiData }) => {
+  // console.log(apiData[0]);
+
+  // if (apiData[0]) {
+  //   console.log(apiData[0].city.name);
+  // }
+
+  // apiData.map(city => console.log(city.city.name));
+
   return (
     <table className={styles.wrapper}>
       <thead>
@@ -13,8 +22,17 @@ const Table = ({ cities, click }) => {
         </tr>
       </thead>
       <tbody>
-        {cities.map(city => (
-          <Row key={city} city={city} click={click} />
+        {apiData.map((city, i) => (
+          <tr key={city.city.id} className={styles.row}>
+            <td>{i + 1}</td>
+            <td> {city.city.name} </td>
+            <td> {city.city.id} </td>
+            <td>
+              <Button click={click} city={city.city.name}>
+                Usuń
+              </Button>
+            </td>
+          </tr>
         ))}
       </tbody>
     </table>

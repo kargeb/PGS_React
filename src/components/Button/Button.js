@@ -1,9 +1,9 @@
 import React from "react";
 
-const Button = ({ clearStorage, city }) => {
+const Button = ({ city, children, click }) => {
   return (
-    <button onClick={clearStorage} name={city}>
-      Remove
+    <button onClick={click} name={city}>
+      {children}
     </button>
   );
 };

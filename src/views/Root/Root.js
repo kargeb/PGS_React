@@ -8,7 +8,7 @@ import Button from "../../components/Button/Button";
 class Root extends Component {
   state = {
     addingCity: "",
-    cities: [],
+    cities: ["kraków", "gdańsk", "warszawa", "szczecin"],
     apiData: []
   };
 
@@ -16,20 +16,14 @@ class Root extends Component {
     const chosenCity = e.target.name;
 
     console.log("jestem w remove" + chosenCity);
-    // const currentCities = this.getCitiesFromStorage();
 
-    console.log(localStorage);
-    localStorage.removeItem(chosenCity);
-    console.log(localStorage);
-
-    // const currentCities = [...this.state.cities];
-    // console.log(" current cities: " + currentCities);
-    // console.log(chosenCity);
-    // var index = currentCities.indexOf(chosenCity);
-    // currentCities.splice(index, 1);
-    this.setState({ cities: this.getCitiesFromStorage(), addingCity: "" }, () =>
-      this.state.cities.map(city => this.checkWeather(city))
+    const newData = this.state.apiData.filter(
+      city => city.city.name !== chosenCity
     );
+
+    console.log(newData);
+
+    this.setState({ apiData: [...newData] });
   };
 
   addCity = e => {
@@ -37,16 +31,18 @@ class Root extends Component {
 
     const newCity = this.state.addingCity.toUpperCase().toLowerCase();
 
-    localStorage.setItem(newCity, "");
+    // localStorage.setItem(newCity, "");
+    this.setState(prevState => ({
+      cities: [...prevState.cities, newCity],
+      addingCity: ""
+    }));
 
-    this.setState({ cities: this.getCitiesFromStorage(), addingCity: "" }, () =>
-      this.state.cities.map(city => this.checkWeather(city))
-    );
+    this.checkWeather(newCity);
+
+    // this.setState({ cities: this.getCitiesFromStorage(), addingCity: "" }, () =>
+    //   this.state.cities.map(city => this.checkWeather(city))
+    // );
   };
-
-  //   componentDidUpdate() {
-  //     console.log("DID UPDATE");
-  //   }
 
   getCitiesFromStorage = () => {
     const cities = [];
@@ -61,62 +57,85 @@ class Root extends Component {
   };
 
   componentDidMount() {
-    // this.state.cities.map(city => this.checkWeather(city));
-
     console.log("start");
-    this.setState({ cities: this.getCitiesFromStorage() }, () =>
+
+    console.log(this.state.cities.length);
+
+    console.log("loacl stroage length " + localStorage.length);
+
+    const localItems = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+      console.log(localStorage.key(i));
+      localItems.push(localStorage.key(i));
+    }
+
+    console.log(localItems);
+
+    this.setState({ cities: [...localItems] }, () =>
       this.state.cities.map(city => this.checkWeather(city))
     );
 
-    // this.state.cities.map(city => localStorage.setItem(city, ""));
-    console.log(this.state.cities);
     // this.state.cities.map(city => this.checkWeather(city));
-    // console.log(localStorage.length);
-    // localStorage.setItem("property", "dupka");
-
-    // // dodaje właściwość animal
-    // localStorage.setItem("animal", "pies");
-    // console.log(localStorage.length);
-
-    // fetch("https://randomuser.me/api/?format=json&results=10")
-    //   .then(res => res.json())
-    //   .then(json => this.setState({ contacts: json.results }));
   }
 
-  //   componentDidUpdate() {
-  //     this.state.cities.map(city => this.checkWeather(city));
-  //   }
+  componentDidUpdate(prevProps, prevState) {
+    console.log("did update");
+    console.log(prevState.apiData);
+    console.log(prevState.apiData.length === this.state.apiData.length);
+    console.log(this.state.apiData);
+  }
 
   checkWeather = city => {
-    // const URL_LEFT_PART = "http://api.openweathermap.org/data/2.5/forecast?q=";
-    // const URL_RIGHT_PART =
-    //   "&appid=09d095681879bfdc3462857a2653dc8c&units=metric";
-
     fetch(
       "http://api.openweathermap.org/data/2.5/forecast?q=" +
         city +
         "&appid=09d095681879bfdc3462857a2653dc8c&units=metric"
     )
       .then(res => res.json())
-      .then(json => this.setState({ apiData: json }));
+      .then(json => {
+        if (json.cod == 404) {
+          console.log("BŁĄD");
+          return false;
+        } else if (this.checkDuplicate(json)) {
+          console.log("JUŻ JEST TAKIE MIASTO");
+          return false;
+        } else {
+          this.setState(prevState => prevState.apiData.push(json));
+          return json;
+        }
+      });
+  };
 
-    //   .then(json => this.setState({ apiData: json }));
+  checkDuplicate = newCity => {
+    let same = false;
 
-    // console.log();
+    this.state.apiData.forEach(city => {
+      if (city.city.id == newCity.city.id) {
+        same = true;
+      }
+    });
 
-    // .then(json => this.setState({ contacts: json.results }));
+    console.log("same: " + same);
 
-    // http://api.openweathermap.org/data/2.5/forecast?q=lancut&appid=09d095681879bfdc3462857a2653dc8c&units=metric
+    return same;
   };
 
   clearStorage = () => {
-    console.log("jestem w clear");
+    console.log("jestem TU");
+    console.log(this.state.apiData[0].city.name);
+  };
+
+  saveInStorage = () => {
+    console.log("JESTESMY W SAVE");
     localStorage.clear();
+    this.state.apiData.map(city =>
+      localStorage.setItem(city.city.name, JSON.stringify(city))
+    );
   };
 
   handleChange = event => {
     this.setState({ addingCity: event.target.value });
-    // console.log(this.state.addingCity);
   };
 
   render() {
@@ -129,11 +148,17 @@ class Root extends Component {
             placeholder="Nazwa miasta"
             value={this.state.addingCity}
             onChange={this.handleChange}
+            required
           />
           <input type="submit" value="Dodaj" />
         </form>
-        <Button clearStorage={this.clearStorage} />
-        <Table cities={this.state.cities} click={this.removeCity} />
+        {/* <Button click={this.clearStorage}>Wyczyść wszystko</Button> */}
+        <Button click={this.saveInStorage}>Zapisz</Button>
+        <Table
+          cities={this.state.cities}
+          apiData={this.state.apiData}
+          click={this.removeCity}
+        />
       </div>
     );
   }
