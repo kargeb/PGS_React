@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Table.module.css";
-import Row from "./Row/Row";
 import Button from "../Button/Button";
 import Temp from "../Temp/Temp";
 import { Link } from "react-router-dom";
@@ -13,17 +12,23 @@ const Table = ({ click, apiData, details, celsius }) => {
           <th className={styles.cell}> # </th>
           <th className={styles.cell}>Miasto</th>
           <th className={styles.cell}> Średnia prognozowana temperatura </th>
+          <th className={styles.cell} />
         </tr>
       </thead>
       <tbody>
         {apiData.map((city, i) => (
           <tr key={city.city.id} className={styles.row}>
             <td>{i + 1}</td>
-            <Link to="/details">
-              <td onClick={details} name={city.city.name}>
-                {city.city.name}
-              </td>
-            </Link>
+
+            {/* <td onClick={details} name={city.city.name}> */}
+            <td>
+              <Link to="/details">
+                <span onClick={details} name={city.city.name}>
+                  {city.city.name}
+                </span>
+              </Link>
+            </td>
+
             <td>
               <Temp city={city} celsius={celsius} />
             </td>

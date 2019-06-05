@@ -8,7 +8,6 @@ const Landing = ({ addCity, cities, apiData, click, details, celsius }) => {
   return (
     <div>
       <HeaderLabel />
-      {/* <h1>Landing</h1> */}
       <Link to="/settings">
         <h3>Ustawienia</h3>
       </Link>

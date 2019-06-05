@@ -25,7 +25,7 @@ class Form extends Component {
         <input
           name="new"
           type="text"
-          placeholder="Nazwa miastaaaaaa"
+          placeholder="Nazwa miasta"
           value={this.state.inputField}
           onChange={this.handleInputChange}
           required

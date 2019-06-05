@@ -1,17 +1,11 @@
 import React, { Component } from "react";
-// import styles from "./Root.module.css";
-import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
-import Table from "../../components/Table/Table";
-// import { citiesNames } from "../../data/cities";
-import Button from "../../components/Button/Button";
-import Temp from "../../components/Temp/Temp";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Settings from "../Settings/Settings";
 import Details from "../Details/Details";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Landing from "../Landing/Landing";
 
 class Root extends Component {
   state = {
-    addingCity: "",
     cities: [],
     apiData: [],
     details: "",
@@ -21,13 +15,9 @@ class Root extends Component {
   removeCity = e => {
     const chosenCity = e.target.name;
 
-    console.log("jestem w remove" + chosenCity);
-
     const newData = this.state.apiData.filter(
       city => city.city.name !== chosenCity
     );
-
-    console.log(newData);
 
     this.setState({ apiData: [...newData] });
   };
@@ -35,57 +25,30 @@ class Root extends Component {
   addCity = e => {
     e.preventDefault();
 
-    const newCity = this.state.addingCity.toUpperCase().toLowerCase();
+    const newCity = e.target[0].value.toUpperCase().toLowerCase();
 
     this.setState(prevState => ({
-      cities: [...prevState.cities, newCity],
-      addingCity: ""
+      cities: [...prevState.cities, newCity]
     }));
 
     this.checkWeather(newCity);
   };
 
-  getCitiesFromStorage = () => {
-    const cities = [];
-
-    for (let i = 0; i < localStorage.length; i++) {
-      console.log(localStorage.key(i));
-
-      cities.push(localStorage.key(i));
-    }
-
-    return cities;
-  };
-
   componentDidMount() {
-    console.log("start");
-
-    console.log(this.state.cities.length);
-
-    console.log("loacl stroage length " + localStorage.length);
-
     const localItems = [];
 
     for (let i = 0; i < localStorage.length; i++) {
-      console.log(localStorage.key(i));
       localItems.push(localStorage.key(i));
     }
-
-    console.log(localItems);
 
     this.setState({ cities: [...localItems] }, () =>
       this.state.cities.map(city => this.checkWeather(city))
     );
-
-    // this.state.cities.map(city => this.checkWeather(city));
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log("did update");
-  //   console.log(prevState.apiData);
-  //   console.log(prevState.apiData.length === this.state.apiData.length);
-  //   console.log(this.state.apiData);
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    this.saveInStorage();
+  }
 
   checkWeather = city => {
     fetch(
@@ -95,7 +58,7 @@ class Root extends Component {
     )
       .then(res => res.json())
       .then(json => {
-        if (json.cod == 404) {
+        if (json.cod === 404) {
           console.log("BŁĄD");
           return false;
         } else if (this.checkDuplicate(json)) {
@@ -112,7 +75,7 @@ class Root extends Component {
     let same = false;
 
     this.state.apiData.forEach(city => {
-      if (city.city.id == newCity.city.id) {
+      if (city.city.id === newCity.city.id) {
         same = true;
       }
     });
@@ -120,31 +83,18 @@ class Root extends Component {
     return same;
   };
 
-  clearStorage = () => {
-    console.log("jestem TU");
-    console.log(this.state.apiData[0].city.name);
-  };
-
   saveInStorage = () => {
-    console.log("JESTESMY W SAVE");
     localStorage.clear();
     this.state.apiData.map(city =>
       localStorage.setItem(city.city.name, JSON.stringify(city))
     );
   };
 
-  handleChange = event => {
-    this.setState({ addingCity: event.target.value });
-  };
-
   showDetalis = event => {
-    console.log(event.target.innerText);
-
     const chosenCity = this.state.apiData.filter(
-      city => city.city.name == event.target.innerText
+      city => city.city.name === event.target.innerText
     );
 
-    console.log(chosenCity[0]);
     this.setState({ details: chosenCity[0] });
   };
 
@@ -156,18 +106,47 @@ class Root extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <div>
-          <HeaderLabel />
-          <h1>ROOT</h1>
-        </div>
-
-        <Switch>
-          <Route exact path="/" component={Root} />
-          <Route path="/details" component={Details} />
-          <Route path="/settings" component={Settings} />
-        </Switch>
-      </BrowserRouter>
+      <div>
+        <BrowserRouter>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <Landing
+                  {...props}
+                  addCity={this.addCity}
+                  cities={this.state.cities}
+                  apiData={this.state.apiData}
+                  click={this.removeCity}
+                  details={this.showDetalis}
+                  celsius={this.state.celsius}
+                />
+              )}
+            />
+            <Route
+              path="/details"
+              render={props => (
+                <Details
+                  {...props}
+                  details={this.state.details}
+                  celsius={this.state.celsius}
+                />
+              )}
+            />
+            <Route
+              path="/settings"
+              render={props => (
+                <Settings
+                  {...props}
+                  handleRadio={this.handleRadio}
+                  celsius={this.state.celsius}
+                />
+              )}
+            />
+          </Switch>
+        </BrowserRouter>
+      </div>
     );
   }
 }
