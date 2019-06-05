@@ -3,6 +3,10 @@ import styles from "./Table.module.css";
 import Button from "../Button/Button";
 import Temp from "../Temp/Temp";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+
+const element = <FontAwesomeIcon icon={faMinusCircle} />;
 
 const Table = ({ removeCity, apiData, details, celsius }) => {
   return (
@@ -32,7 +36,7 @@ const Table = ({ removeCity, apiData, details, celsius }) => {
             </td>
             <td className={styles.cellButton}>
               <Button removeCity={removeCity} city={city.city.name}>
-                Usuń
+                {element} Usuń
               </Button>
             </td>
           </tr>

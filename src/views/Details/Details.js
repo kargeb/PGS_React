@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
 import Temp from "../../components/Temp/Temp";
 import styles from "./Details.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
+
+const element = <FontAwesomeIcon icon={faArrowAltCircleLeft} />;
 
 const Details = ({ details, celsius, match }) => {
   console.log(match);
@@ -42,7 +46,7 @@ const Details = ({ details, celsius, match }) => {
           </>
         )}
         <Link to="/">
-          <button className={styles.button}>Powrót </button>
+          <button className={styles.button}> {element} Powrót </button>
         </Link>
       </div>
     </>

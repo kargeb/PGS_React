@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
 import styles from "./Settings.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
+
+const element = <FontAwesomeIcon icon={faArrowAltCircleLeft} />;
 
 const Settings = ({ handleRadio, celsius }) => {
   return (
@@ -33,7 +37,7 @@ const Settings = ({ handleRadio, celsius }) => {
           </form>
         </div>
         <Link to="/">
-          <button className={styles.button}>Powrót </button>
+          <button className={styles.button}> {element} Powrót </button>
         </Link>
       </div>
     </>

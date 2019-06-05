@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import styles from "./FormNewCity.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+
+const element = <FontAwesomeIcon icon={faSearchPlus} />;
 
 class FormNewCity extends Component {
   state = {
@@ -37,7 +41,7 @@ class FormNewCity extends Component {
           type="submit"
           onClick={this.clearInput}
         >
-          Dodaj
+          {element} Dodaj
         </button>
       </form>
     );
