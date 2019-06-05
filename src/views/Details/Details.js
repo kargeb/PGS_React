@@ -8,10 +8,7 @@ import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const element = <FontAwesomeIcon icon={faArrowAltCircleLeft} />;
 
-const Details = ({ details, celsius, match }) => {
-  console.log(match);
-  console.log(details);
-
+const Details = ({ details, celsius }) => {
   return (
     <>
       <HeaderLabel />

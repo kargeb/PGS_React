@@ -7,7 +7,7 @@ function calculateAverageTemp(data) {
   }
   temp = temp / data.list.length;
 
-  return Math.trunc(temp);
+  return temp.toFixed(1);
 }
 
 const Temp = ({ city, celsius }) => (
@@ -15,7 +15,7 @@ const Temp = ({ city, celsius }) => (
     {celsius ? (
       <span> {calculateAverageTemp(city)}&#8451; </span>
     ) : (
-      <span>{Math.trunc(calculateAverageTemp(city) * 1.8 + 32)}&#8457;</span>
+      <span>{(calculateAverageTemp(city) * 1.8 + 32).toFixed(1)}&#8457;</span>
     )}
   </>
 );
