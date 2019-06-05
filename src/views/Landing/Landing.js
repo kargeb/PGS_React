@@ -15,6 +15,7 @@ const Landing = ({
     <div>
       <HeaderLabel />
       <FormNewCity addCity={addCity} />
+
       <Table
         removeCity={removeCity}
         cities={cities}

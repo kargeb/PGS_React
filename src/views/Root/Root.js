@@ -4,16 +4,6 @@ import Settings from "../Settings/Settings";
 import Details from "../Details/Details";
 import Landing from "../Landing/Landing";
 
-const Child = ({ match }) => {
-  console.log("match" + match);
-
-  return (
-    <div>
-      <h3> ID: </h3>
-    </div>
-  );
-};
-
 class Root extends Component {
   state = {
     cities: [],
