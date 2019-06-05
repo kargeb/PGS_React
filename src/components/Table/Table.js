@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 import Temp from "../Temp/Temp";
 import { Link } from "react-router-dom";
 
-const Table = ({ click, apiData, details, celsius }) => {
+const Table = ({ removeCity, apiData, details, celsius }) => {
   return (
     <table className={styles.wrapper}>
       <thead>
@@ -19,8 +19,6 @@ const Table = ({ click, apiData, details, celsius }) => {
         {apiData.map((city, i) => (
           <tr key={city.city.id} className={styles.row}>
             <td>{i + 1}</td>
-
-            {/* <td onClick={details} name={city.city.name}> */}
             <td>
               <Link to="/details">
                 <span onClick={details} name={city.city.name}>
@@ -33,7 +31,7 @@ const Table = ({ click, apiData, details, celsius }) => {
               <Temp city={city} celsius={celsius} />
             </td>
             <td>
-              <Button click={click} city={city.city.name}>
+              <Button removeCity={removeCity} city={city.city.name}>
                 Usuń
               </Button>
             </td>

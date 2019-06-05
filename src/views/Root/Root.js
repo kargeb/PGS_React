@@ -58,7 +58,7 @@ class Root extends Component {
     )
       .then(res => res.json())
       .then(json => {
-        if (json.cod === 404) {
+        if (json.cod == 404) {
           console.log("BŁĄD");
           return false;
         } else if (this.checkDuplicate(json)) {
@@ -75,7 +75,7 @@ class Root extends Component {
     let same = false;
 
     this.state.apiData.forEach(city => {
-      if (city.city.id === newCity.city.id) {
+      if (city.city.id == newCity.city.id) {
         same = true;
       }
     });
@@ -118,7 +118,7 @@ class Root extends Component {
                   addCity={this.addCity}
                   cities={this.state.cities}
                   apiData={this.state.apiData}
-                  click={this.removeCity}
+                  removeCity={this.removeCity}
                   details={this.showDetalis}
                   celsius={this.state.celsius}
                 />

@@ -4,7 +4,14 @@ import Form from "../../components/Form/Form";
 import Table from "../../components/Table/Table";
 import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
 
-const Landing = ({ addCity, cities, apiData, click, details, celsius }) => {
+const Landing = ({
+  removeCity,
+  addCity,
+  cities,
+  apiData,
+  details,
+  celsius
+}) => {
   return (
     <div>
       <HeaderLabel />
@@ -13,9 +20,9 @@ const Landing = ({ addCity, cities, apiData, click, details, celsius }) => {
       </Link>
       <Form addCity={addCity} />
       <Table
+        removeCity={removeCity}
         cities={cities}
         apiData={apiData}
-        click={click}
         details={details}
         celsius={celsius}
       />
