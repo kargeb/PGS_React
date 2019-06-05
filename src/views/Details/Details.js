@@ -35,14 +35,6 @@ const Details = ({ details, celsius, match }) => {
                 </div>
               </div>
             </div>
-            {/* <ul>
-              <li>{details.city.name}</li>
-              <li>{details.city.coord.lat}</li>
-              <li>{details.city.coord.lon}</li>
-              <li>
-                <Temp city={details} celsius={celsius} />
-              </li>
-            </ul> */}
           </>
         )}
         <Link to="/">
