@@ -1,7 +1,11 @@
 .wrapper {
   margin-left: 5vw;
+  margin-top: 20px;
   height: 40px;
   width: 90vw;
-  background-color: cornflowerblue;
+  background-color: #f7fafd;
   opacity: 0.5;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }

@@ -1,0 +1,36 @@
+.wrapper {
+  width: 80vw;
+  margin-left: 10vw;
+  margin-top: 30px;
+}
+
+.form {
+  padding-top: 5px;
+  height: 80px;
+  border-bottom: 2px solid #dfe1e3;
+  border-top: 2px solid #dfe1e3;
+  display: flex;
+}
+
+.labelUnit {
+  width: 30%;
+}
+
+.unitsRadio {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  margin-top: 10px;
+  float: right;
+  height: 35px;
+  color: #88b9f3;
+  border: 2px solid #88b9f3;
+  border-radius: 5px;
+  background-color: transparent;
+  padding: 0 10px;
+  font-weight: bold;
+  /* margin-right: 10px; */
+  cursor: pointer;
+}

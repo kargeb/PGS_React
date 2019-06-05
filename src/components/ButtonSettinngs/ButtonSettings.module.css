@@ -1,0 +1,12 @@
+.button {
+  height: 35px;
+  color: #007aff;
+  border: 2px solid #007aff;
+  opacity: 1;
+  border-radius: 5px;
+  background-color: transparent;
+  padding: 0 10px;
+  font-weight: bold;
+  margin-right: 50px;
+  cursor: pointer;
+}

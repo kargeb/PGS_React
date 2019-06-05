@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import styles from "./FormNewCity.module.css";
 
-class Form extends Component {
+class FormNewCity extends Component {
   state = {
     inputField: ""
   };
@@ -21,8 +22,9 @@ class Form extends Component {
 
   render() {
     return (
-      <form onSubmit={this.props.addCity}>
+      <form onSubmit={this.props.addCity} className={styles.wrapper}>
         <input
+          className={styles.input}
           name="new"
           type="text"
           placeholder="Nazwa miasta"
@@ -30,7 +32,11 @@ class Form extends Component {
           onChange={this.handleInputChange}
           required
         />
-        <button type="submit" onClick={this.clearInput}>
+        <button
+          className={styles.button}
+          type="submit"
+          onClick={this.clearInput}
+        >
           Dodaj
         </button>
       </form>
@@ -38,4 +44,4 @@ class Form extends Component {
   }
 }
 
-export default Form;
+export default FormNewCity;

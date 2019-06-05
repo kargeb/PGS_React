@@ -7,30 +7,30 @@ import { Link } from "react-router-dom";
 const Table = ({ removeCity, apiData, details, celsius }) => {
   return (
     <table className={styles.wrapper}>
-      <thead>
+      <thead className={styles.theadTopBorder}>
         <tr className={styles.row}>
-          <th className={styles.cell}> # </th>
-          <th className={styles.cell}>Miasto</th>
-          <th className={styles.cell}> Średnia prognozowana temperatura </th>
-          <th className={styles.cell} />
+          <th className={styles.cellLp}> # </th>
+          <th className={styles.cellCity}>Miasto</th>
+          <th className={styles.cellTemp}>Średnia prognozowana temperatura</th>
+          <th className={styles.cellButton} />
         </tr>
       </thead>
       <tbody>
         {apiData.map((city, i) => (
           <tr key={city.city.id} className={styles.row}>
-            <td>{i + 1}</td>
-            <td>
-              <Link to="/details">
+            <td className={styles.cellLp}>{i + 1}</td>
+            <td className={styles.cellCity}>
+              <Link to="/details" className={styles.link}>
                 <span onClick={details} name={city.city.name}>
                   {city.city.name}
                 </span>
               </Link>
             </td>
 
-            <td>
+            <td className={styles.cellTemp}>
               <Temp city={city} celsius={celsius} />
             </td>
-            <td>
+            <td className={styles.cellButton}>
               <Button removeCity={removeCity} city={city.city.name}>
                 Usuń
               </Button>

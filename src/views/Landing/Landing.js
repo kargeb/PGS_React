@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Form from "../../components/Form/Form";
+import FormNewCity from "../../components/FormNewCity/FormNewCity";
 import Table from "../../components/Table/Table";
 import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
 
@@ -15,10 +14,7 @@ const Landing = ({
   return (
     <div>
       <HeaderLabel />
-      <Link to="/settings">
-        <h3>Ustawienia</h3>
-      </Link>
-      <Form addCity={addCity} />
+      <FormNewCity addCity={addCity} />
       <Table
         removeCity={removeCity}
         cities={cities}

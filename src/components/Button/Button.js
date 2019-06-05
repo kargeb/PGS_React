@@ -1,8 +1,9 @@
 import React from "react";
+import styles from "./Button.module.css";
 
 const Button = ({ city, children, removeCity }) => {
   return (
-    <button onClick={removeCity} name={city}>
+    <button className={styles.button} onClick={removeCity} name={city}>
       {children}
     </button>
   );

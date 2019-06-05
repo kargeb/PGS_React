@@ -1,19 +1,43 @@
 .wrapper {
-  background-color: darkgray;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 30px 5vw;
+  width: 80vw;
+  margin-left: 10vw;
+  margin-top: 30px;
+  border-collapse: collapse;
+}
+
+.theadTopBorder {
+  border-top: 2px solid #dfe1e3;
 }
 
 .row {
-  height: 30px;
-  width: 90vw;
-  margin: 0 5vw;
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
+  height: 45px;
+  border-bottom: 2px solid #dfe1e3;
+  border-collapse: collapse;
 }
 
-.cell {
-  /* width: 30vw; */
+.cellLp {
+  width: 10px;
+}
+
+.cellCity {
+  padding-left: 100px;
+  text-align: left;
+  width: 200px;
+}
+
+.cellTemp {
+  text-align: left;
+  width: 200px;
+}
+
+.cellButton {
+  /* padding-left: 100px; */
+  text-align: right;
+  padding-right: 150px;
+  /* width: 200px; */
+}
+
+.link {
+  text-decoration: none;
+  color: #007aff;
 }
