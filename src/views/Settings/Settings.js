@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
 
 const Settings = ({ handleRadio, celsius }) => {
@@ -22,6 +23,7 @@ const Settings = ({ handleRadio, celsius }) => {
         />
         <label htmlFor="fahrenheit">Fahrenheit</label>
       </form>
+      <Link to="/">Powrót</Link>
     </>
   );
 };

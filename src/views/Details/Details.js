@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
 import Temp from "../../components/Temp/Temp";
 
@@ -17,6 +18,7 @@ const Details = ({ details, celsius }) => {
           </li>
         </ul>
       )}
+      <Link to="/">Powrót</Link>
     </>
   );
 };

@@ -11,9 +11,7 @@ const Table = ({ click, apiData, details, celsius }) => {
       <thead>
         <tr className={styles.row}>
           <th className={styles.cell}> # </th>
-          <th className={styles.cell}>
-            <Link to="/settings">Miasto</Link>
-          </th>
+          <th className={styles.cell}>Miasto</th>
           <th className={styles.cell}> Średnia prognozowana temperatura </th>
         </tr>
       </thead>
