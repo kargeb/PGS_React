@@ -2,18 +2,18 @@ import React from "react";
 import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
 import Temp from "../../components/Temp/Temp";
 
-const Details = () => {
+const Details = ({ details, celsius }) => {
   return (
     <>
       <HeaderLabel />
-      <h1>Details</h1>;
-      {this.state.details && (
+      <h1>Details</h1>
+      {details && (
         <ul>
-          <li>{this.state.details.city.name}</li>
-          <li>{this.state.details.city.coord.lat}</li>
-          <li>{this.state.details.city.coord.lon}</li>
+          <li>{details.city.name}</li>
+          <li>{details.city.coord.lat}</li>
+          <li>{details.city.coord.lon}</li>
           <li>
-            <Temp city={this.state.details} celsius={this.state.celsius} />
+            <Temp city={details} celsius={celsius} />
           </li>
         </ul>
       )}

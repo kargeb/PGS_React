@@ -7,7 +7,6 @@ import Button from "../../components/Button/Button";
 import Temp from "../../components/Temp/Temp";
 import Settings from "../Settings/Settings";
 import Details from "../Details/Details";
-import Main from "../Main/Main";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 class Root extends Component {

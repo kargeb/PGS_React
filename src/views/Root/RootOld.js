@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import styles from "./Root.module.css";
 import HeaderLabel from "../../components/HeaderLabel/HeaderLabel";
 import Table from "../../components/Table/Table";
@@ -6,10 +7,12 @@ import Table from "../../components/Table/Table";
 import Button from "../../components/Button/Button";
 import Temp from "../../components/Temp/Temp";
 import Settings from "../Settings/Settings";
+import Form from "../../components/Form/Form";
+import Details from "../Details/Details";
+import Landing from "../Landing/Landing";
 
 class Root extends Component {
   state = {
-    addingCity: "",
     cities: [],
     apiData: [],
     details: "",
@@ -33,27 +36,29 @@ class Root extends Component {
   addCity = e => {
     e.preventDefault();
 
-    const newCity = this.state.addingCity.toUpperCase().toLowerCase();
+    console.log("JESTEM W ADD CITY");
+    console.log(e.target[0].value);
+
+    const newCity = e.target[0].value.toUpperCase().toLowerCase();
 
     this.setState(prevState => ({
-      cities: [...prevState.cities, newCity],
-      addingCity: ""
+      cities: [...prevState.cities, newCity]
     }));
 
     this.checkWeather(newCity);
   };
 
-  getCitiesFromStorage = () => {
-    const cities = [];
+  // getCitiesFromStorage = () => {
+  //   const cities = [];
 
-    for (let i = 0; i < localStorage.length; i++) {
-      console.log(localStorage.key(i));
+  //   for (let i = 0; i < localStorage.length; i++) {
+  //     console.log(localStorage.key(i));
 
-      cities.push(localStorage.key(i));
-    }
+  //     cities.push(localStorage.key(i));
+  //   }
 
-    return cities;
-  };
+  //   return cities;
+  // };
 
   componentDidMount() {
     console.log("start");
@@ -78,12 +83,10 @@ class Root extends Component {
     // this.state.cities.map(city => this.checkWeather(city));
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log("did update");
-  //   console.log(prevState.apiData);
-  //   console.log(prevState.apiData.length === this.state.apiData.length);
-  //   console.log(this.state.apiData);
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    console.log("DID UPDATE!");
+    this.saveInStorage();
+  }
 
   checkWeather = city => {
     fetch(
@@ -131,10 +134,6 @@ class Root extends Component {
     );
   };
 
-  handleChange = event => {
-    this.setState({ addingCity: event.target.value });
-  };
-
   showDetalis = event => {
     console.log(event.target.innerText);
 
@@ -155,28 +154,73 @@ class Root extends Component {
   render() {
     return (
       <div>
-        <HeaderLabel />
-        <form onSubmit={this.addCity}>
-          <input
-            type="text"
-            placeholder="Nazwa miasta"
-            value={this.state.addingCity}
-            onChange={this.handleChange}
-            required
-          />
-          <input type="submit" value="Dodaj" />
-        </form>
-        {/* <Button click={this.clearStorage}>Wyczyść wszystko</Button> */}
-        <Button click={this.saveInStorage}>Zapisz</Button>
-        <Table
+        <BrowserRouter>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <Landing
+                  {...props}
+                  addCity={this.addCity}
+                  cities={this.state.cities}
+                  apiData={this.state.apiData}
+                  click={this.removeCity}
+                  details={this.showDetalis}
+                  celsius={this.state.celsius}
+                />
+              )}
+            />
+            <Route
+              path="/details"
+              render={props => (
+                <Details
+                  {...props}
+                  details={this.state.details}
+                  celsius={this.state.celsius}
+                />
+              )}
+            />
+            <Route
+              path="/settings"
+              render={props => (
+                <Settings
+                  {...props}
+                  handleRadio={this.handleRadio}
+                  celsius={this.state.celsius}
+                />
+              )}
+            />
+          </Switch>
+        </BrowserRouter>
+        {/* <Landing
+          addCity={this.addCity}
           cities={this.state.cities}
           apiData={this.state.apiData}
           click={this.removeCity}
           details={this.showDetalis}
           celsius={this.state.celsius}
-        />
+        /> */}
+        {/* <Settings
+          handleRadio={this.handleRadio}
+          celsius={this.state.celsius}
+        /> */}
+        {/* <Details
+          details={this.state.details}
+          celsius={this.state.celsius}
+        /> */}
+        {/* <HeaderLabel /> */}
+        {/* <Form addCity={this.addCity} /> */}
+        {/* <Button click={this.saveInStorage}>Zapisz</Button> */}
+        {/* <Table
+          cities={this.state.cities}
+          apiData={this.state.apiData}
+          click={this.removeCity}
+          details={this.showDetalis}
+          celsius={this.state.celsius}
+        /> */}
 
-        <form>
+        {/* <form>
           <input
             id="celsius"
             type="radio"
@@ -191,9 +235,9 @@ class Root extends Component {
             onChange={() => this.handleRadio(false)}
           />
           <label htmlFor="fahrenheit">Fahrenheit</label>
-        </form>
+        </form> */}
 
-        {this.state.details && (
+        {/* {this.state.details && (
           <ul>
             <li>{this.state.details.city.name}</li>
             <li>{this.state.details.city.coord.lat}</li>
@@ -202,7 +246,7 @@ class Root extends Component {
               <Temp city={this.state.details} celsius={this.state.celsius} />
             </li>
           </ul>
-        )}
+        )} */}
       </div>
     );
   }
